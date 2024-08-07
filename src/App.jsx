@@ -63,7 +63,7 @@ function App() {
       text-white 
       font-sans"
       style={{
-        backgroundImage: `url('./src/assets/bg.jpg')`,
+        backgroundImage: `url('https://images.pexels.com/photos/2114014/pexels-photo-2114014.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')`,
         backgroundSize: "cover",
       }}
     >
