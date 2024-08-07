@@ -55,7 +55,7 @@ function App() {
 
   return (
     <div
-      className="h-screen
+      className="h-svh
       w-full
       flex 
       flex-col
@@ -69,7 +69,7 @@ function App() {
     >
       <div className="search text-center mt-5">
         <input
-          className="rounded-3xl w-[350px] px-5 py-[7px] bg-gray-600 outline-none  font-serif"
+          className="rounded-3xl w-[350px] px-5 py-[7px] bg-gray-600 outline-none font-serif"
           type="text"
           placeholder="Search for location"
           value={location}
