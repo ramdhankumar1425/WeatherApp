@@ -2,8 +2,6 @@ import { useEffect } from "react";
 import { useState } from "react";
 
 function App() {
-  // const url = `https://api.openweathermap.org/data/2.5/weather?lat=26.115103&lon=91.703239&appid=f771b503808c4bca52da54b525a504ec`
-
   const [data, setData] = useState({});
   const [location, setLocation] = useState("");
   const [locationField, setLocationField] = useState("London");
@@ -17,7 +15,7 @@ function App() {
   }
   useEffect(() => {
     async function getData(event) {
-      if (event.key === "Enter") {
+      if (event.key === "Enter" && event.target.value !== "") {
         setLocationField(location);
         const coordinate = await getCoordinates(location);
         if (coordinate) {
@@ -55,11 +53,8 @@ function App() {
 
   return (
     <div
-      className="h-svh
-      w-full
-      flex 
-      flex-col
-      justify-between
+      className="h-screen
+      w-screen
       text-white 
       font-sans"
       style={{
@@ -67,60 +62,51 @@ function App() {
         backgroundSize: "cover",
       }}
     >
-      <div className="search text-center mt-5">
+      <div className="fixed top-[7%] w-[60%] left-[50%] -translate-x-2/4 md:w-[30vw]">
         <input
-          className="rounded-3xl w-[350px] px-5 py-[7px] bg-gray-600 outline-none font-serif"
+          className="rounded-3xl w-full px-5 py-[7px] bg-gray-600 outline-none font-serif"
           type="text"
           placeholder="Search for location"
           value={location}
           onChange={(event) => setLocation(event.target.value)}
         />
       </div>
-      <div className="ml-20 bg-gray-500 w-[15rem] h-[17rem] rounded-3xl flex flex-col justify-center items-center">
-        <div className="location text-center overflow-hidden w-[13rem]">
-          {locationField.toUpperCase()}
+      <div className="fixed top-[20%] md:top-[30%] left-[50%] -translate-x-2/4 md:w-[420px] md:h-[20%] w-[60%] h-[25%] flex flex-col sm:flex-row justify-center items-center md:gap-12 gap-7 rounded-3xl bg-gray-500">
+        <div className="text-center">{locationField.toUpperCase()}</div>
+        <div className="text-5xl md:text-6xl font-semibold">
+          {data.main ? <h1>{Math.floor(data.main.temp - 273.15)}°C</h1> : null}
         </div>
-
-        <div className="temp m-5">
+      </div>
+      <div className="fixed top-[55%] md:top-[70%] left-[50%] -translate-x-2/4 w-[60%] md:w-[420px] md:h-[20%] h-[30%] flex flex-col md:flex-row items-center justify-around rounded-3xl bg-gray-500">
+        <div className="feelsLike flex flex-row gap-3 md:gap-1 justify-evenly md:flex-col">
+          <p>Feels Like</p>
           {data.main ? (
-            <h1 className="text-7xl font-semibold">
-              {Math.floor(data.main.temp - 273.15)}°C
+            <p className="font-bold ">
+              {Math.floor(data.main.feels_like - 273.15)}°C
+            </p>
+          ) : null}
+        </div>
+        <div className="humidity flex flex-row gap-3 md:gap-1 justify-evenly md:flex-col">
+          <p>Humidity</p>
+          {data.main ? (
+            <h1 className="font-bold">{Math.floor(data.main.humidity)} %</h1>
+          ) : null}
+        </div>
+        <div className="wind flex flex-row gap-3 md:gap-1 justify-evenly md:flex-col">
+          <p>Wind Speed</p>
+          {data.main ? (
+            <h1 className="font-bold">
+              {Math.floor(data.wind.speed * 1.60934)} KM/H
             </h1>
           ) : null}
         </div>
-      </div>
-      <div className="text-center flex justify-center mb-10">
-        <div className="flex items-center justify-evenly rounded-3xl bg-gray-500 w-[28rem] h-28">
-          <div className="feelsLike">
-            {data.main ? (
-              <h1 className="font-bold">
-                {Math.floor(data.main.feels_like - 273.15)}°C
-              </h1>
-            ) : null}
-            <p>Feels Like</p>
-          </div>
-          <div className="humidity">
-            {data.main ? (
-              <h1 className="font-bold">{Math.floor(data.main.humidity)} %</h1>
-            ) : null}
-            <p>Humidity</p>
-          </div>
-          <div className="wind">
-            {data.main ? (
-              <h1 className="font-bold">
-                {Math.floor(data.wind.speed * 1.60934)} KM/H
-              </h1>
-            ) : null}
-            <p>Wind Speed</p>
-          </div>
-          <div className="visibility">
-            {data.main ? (
-              <h1 className="font-bold">
-                {Math.floor(data.visibility / 1000)} KM
-              </h1>
-            ) : null}
-            <p>Visibility</p>
-          </div>
+        <div className="visibility flex flex-row gap-3 md:gap-1 justify-evenly md:flex-col">
+          <p>Visibility</p>
+          {data.main ? (
+            <h1 className="font-bold">
+              {Math.floor(data.visibility / 1000)} KM
+            </h1>
+          ) : null}
         </div>
       </div>
     </div>
